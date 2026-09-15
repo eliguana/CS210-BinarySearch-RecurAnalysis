@@ -1,1 +1,64 @@
+Iterative Binary Search: Search algorithm that finds the position of a target value within a sorted array. 
+Half of the array is eliminated during each "step"
+  - Not efficient for small data sets; preferred for large ones
+  - Array must be sorted
+  - Uses a while loop
+  - Uses two pointers: low and high
+  - Updates these pointers until low > high
 
+Example: https://medium.com/@maulikukreti07/binary-search-iterative-vs-recursive-7b8fc14d9315
+int binarySearch(int arr[],int n,int key)
+ {
+   int low=0,high=n-1;
+   while(low<=high)
+   {
+     int mid=low+(high-low)/2;
+     if(arr[mid]==key)return mid;
+     else if(arr[mid]<key)low=mid+1;
+     else high=mid-1;
+   }
+ return -1;
+}
+  - Run time complexity: O(log n)
+  - Space Complexity: O(1)
+
+Recursive Binary Search: Function calls itself on a subarray untill it hits the base case
+  - Time complexity: O(log n)
+  - Space complexity: O(log n)
+  - Logic:
+    - If low > high, the element is not there
+    - Recursive step: Call the function again with updated boundaries
+Example: 
+int binarySearch(int arr[],int low,int high,int key) 
+{
+ if(low>high)return -1;
+ int mid=low+(high-low) / 2;
+ if(arr[mid] == key)return mid;
+ else if(arr[mid]>key)
+ return binarySearch(arr,low,mid-1,key);
+ else
+ return binarySearch(arr,mid+1,high,key);
+}
+
+
+Assignment: Implement binary search from scratch in C++17. Your program must work on a sorted vector and 
+return the index of the target or -1 when the target is absent.
+Required implementation: 
+
+  - Implement an iterative binary search.
+  - Implement a recursive binary search.
+  - Instrument both versions to count element comparisons.
+  - Test at least five searches, including: first element, last element, middle element,
+    missing value below the range, and missing value inside the range.
+
+  - For the recursive version, write and explain the recurrence T(n) = T(n/2) + O(1) and connect it 
+    to O(log n).
+      - T(n) = time needed to search n elements
+      - T(n/2) after checking the middle, we only need to search about half the elements
+      - O(1) = checking the middle element and deciding which half to search takes constant time
+      - Summary: Each recursive call searches only half of the remaining vector, while finding the middle 
+        element and comparing it to the target takes constant time. 
+
+  - Compare binary search to a linear search on the same data.
+  - Restriction: do not call std::binary_search, lower_bound, or another library search routine to 
+    perform the required search
